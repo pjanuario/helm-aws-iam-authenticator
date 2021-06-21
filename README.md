@@ -33,21 +33,21 @@ More information follow the instructions of the base image.
 
 # GitLab Usage
 
-deploy_integration:
-  stage: deploy
-  environment:
-    name: integration
-    url: https://int.myenvironment.com
-  variables:
-    NAMESPACE: integration
-  image:
-    name: prnjanuario/helm-aws-iam-auth:latest
-    entrypoint: ["/bin/sh", "-c"]
-  script:
-    - mkdir -p ${KUBEDIR}
-    - echo -n ${KUBE_CONFIG} | base64 -d > ${KUBECONFIG}
-    - echo -n ${INTEGRATION_CONFIG} | base64 -d > ./integration.yaml
-    - helm ls
-    - helm upgrade -i --namespace $NAMESPACE -f ./integration.yaml --set image.tag=$CI_COMMIT_SHORT_SHA $CHART_RELEASE $CHART
-  only:
-    - master
+    deploy_integration:
+      stage: deploy
+      environment:
+        name: integration
+        url: https://int.myenvironment.com
+      variables:
+        NAMESPACE: integration
+      image:
+        name: prnjanuario/helm-aws-iam-auth:latest
+        entrypoint: ["/bin/sh", "-c"]
+      script:
+        - mkdir -p ${KUBEDIR}
+        - echo -n ${KUBE_CONFIG} | base64 -d > ${KUBECONFIG}
+        - echo -n ${INTEGRATION_CONFIG} | base64 -d > ./integration.yaml
+        - helm ls
+        - helm upgrade -i --namespace $NAMESPACE -f ./integration.yaml --set image.tag=$CI_COMMIT_SHORT_SHA $CHART_RELEASE $CHART
+      only:
+        - master
